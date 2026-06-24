@@ -3,12 +3,14 @@
 import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Plane, ChevronDown } from 'lucide-react';
+import { Menu, X, Plane, ChevronDown, Send } from 'lucide-react';
+import { openLead } from '@/lib/lead';
 
 // ─── Romania nav ─────────────────────────────────────────────────────────────
 const roNav = [
   { href: '/operatori', label: 'Operatori' },
   { href: '/judete', label: 'Județe' },
+  { href: '/harta', label: 'Hartă' },
   {
     label: 'Culturi & Servicii',
     dropdown: [
@@ -33,6 +35,7 @@ const roNav = [
 const mdNav = [
   { href: '/moldova/operatori', label: 'Operatori' },
   { href: '/moldova', label: 'Raioane' },
+  { href: '/moldova/harta', label: 'Hartă' },
   { href: '/moldova/servicii', label: 'Servicii' },
   {
     label: 'Informații',
@@ -149,11 +152,18 @@ export default function Header() {
               </Link>
             )}
 
+            <button
+              onClick={() => openLead({ variant: 'match', country: isMd ? 'MD' : 'RO' })}
+              className={`ml-2 inline-flex items-center gap-1.5 px-3.5 py-2 text-white text-sm font-semibold rounded-lg transition-colors ${isMd ? 'bg-blue-700 hover:bg-blue-800' : 'bg-green-700 hover:bg-green-800'}`}
+            >
+              <Send className="w-3.5 h-3.5" />
+              Cere ofertă
+            </button>
             <Link
               href="/adauga-operator"
-              className={`ml-2 px-4 py-2 text-white text-sm font-semibold rounded-lg transition-colors ${isMd ? 'bg-blue-700 hover:bg-blue-800' : 'bg-green-700 hover:bg-green-800'}`}
+              className={`ml-1.5 px-3.5 py-2 text-sm font-semibold rounded-lg border transition-colors ${isMd ? 'text-blue-700 border-blue-300 hover:bg-blue-50' : 'text-green-700 border-green-300 hover:bg-green-50'}`}
             >
-              + Adaugă operator
+              Adaugă firma
             </Link>
           </nav>
 
@@ -223,12 +233,22 @@ export default function Header() {
                 )}
               </div>
 
+              <button
+                onClick={() => {
+                  setOpen(false);
+                  openLead({ variant: 'match', country: isMd ? 'MD' : 'RO' });
+                }}
+                className={`mt-3 mx-3 inline-flex items-center justify-center gap-2 px-4 py-2.5 text-white text-sm font-semibold rounded-lg text-center transition-colors ${isMd ? 'bg-blue-700 hover:bg-blue-800' : 'bg-green-700 hover:bg-green-800'}`}
+              >
+                <Send className="w-4 h-4" />
+                Cere ofertă gratuită
+              </button>
               <Link
                 href="/adauga-operator"
-                className={`mt-3 mx-3 px-4 py-2 text-white text-sm font-semibold rounded-lg text-center transition-colors ${isMd ? 'bg-blue-700 hover:bg-blue-800' : 'bg-green-700 hover:bg-green-800'}`}
+                className={`mt-2 mx-3 px-4 py-2.5 text-sm font-semibold rounded-lg text-center border transition-colors ${isMd ? 'text-blue-700 border-blue-300 hover:bg-blue-50' : 'text-green-700 border-green-300 hover:bg-green-50'}`}
                 onClick={() => setOpen(false)}
               >
-                + Adaugă operator
+                Adaugă firma ta
               </Link>
             </nav>
           </div>

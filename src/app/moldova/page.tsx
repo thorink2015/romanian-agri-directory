@@ -8,6 +8,8 @@ import Breadcrumb from '@/components/layout/Breadcrumb';
 import OperatorCard from '@/components/operators/OperatorCard';
 import FAQAccordion from '@/components/ui/FAQAccordion';
 import NewsletterCTA from '@/components/ui/NewsletterCTA';
+import OperatorMap from '@/components/map/OperatorMap';
+import { getMoldovaMapData } from '@/lib/map-data';
 
 export const metadata: Metadata = {
   title: 'Drone Agricole Moldova | Operatori, Raioane și Prețuri 2026',
@@ -41,6 +43,7 @@ const moldovaFaqs = [
 
 export default function MoldovaPage() {
   const mdOps = getMdOperators();
+  const mdMap = getMoldovaMapData();
 
   return (
     <>
@@ -93,6 +96,34 @@ export default function MoldovaPage() {
             <OperatorCard key={op.slug} operator={op} />
           ))}
         </div>
+      </section>
+
+      {/* Interactive map */}
+      <section className="mb-12">
+        <div className="flex items-end justify-between mb-5 gap-4 flex-wrap">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900">Găsește operatori pe raioane</h2>
+            <p className="text-gray-500 mt-1 text-sm">
+              Apasă pe raionul tău pentru a vedea operatorii de drone din zonă.
+            </p>
+          </div>
+          <Link
+            href="/moldova/harta"
+            className="flex items-center gap-1 text-blue-700 font-medium text-sm hover:text-blue-800 transition-colors"
+          >
+            Vezi harta completă <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+        <OperatorMap
+          geoUrl="/geo/md-raioane.json"
+          regions={mdMap.regions}
+          operatorsByRegion={mdMap.operatorsByRegion}
+          accent="blue"
+          regionWord="raion"
+          allOperatorsHref="/moldova/operatori"
+          country="MD"
+          lazy
+        />
       </section>
 
       {/* Raioane grouped by macro region */}

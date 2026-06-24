@@ -30,7 +30,7 @@ export default function SubmitForm() {
       if (res.ok) {
         setSubmitted(true);
       } else {
-        setError('A apărut o eroare. Vă rugăm trimiteți un email direct la contact@terradron.ro');
+        setError('A apărut o eroare. Vă rugăm trimiteți un email direct la eugen@terradron.ro');
       }
     } catch {
       setError('A apărut o eroare de rețea. Încercați din nou.');

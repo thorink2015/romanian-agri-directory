@@ -4,6 +4,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import GoogleAnalytics from '@/components/analytics/GoogleAnalytics';
 import GAPageView from '@/components/analytics/GAPageView';
+import LeadModal from '@/components/lead/LeadModal';
 import { defaultMetadata } from '@/lib/seo';
 
 export const viewport: Viewport = {
@@ -82,6 +83,7 @@ export default function RootLayout({
         <Header />
         <main id="main-content" className="flex-1">{children}</main>
         <Footer />
+        <LeadModal />
       </body>
     </html>
   );
