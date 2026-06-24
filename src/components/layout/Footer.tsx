@@ -68,6 +68,13 @@ export default function Footer() {
                 ? `Directorul operatorilor de drone agricole din Republica Moldova. Acoperire în toate cele ${moldovaRegions.length} raioane și municipalități. Prețuri 170–240 MDL/ha.`
                 : 'Directorul operatorilor de drone agricole din România. Peste 20 de operatori verificați în toate cele 41 de județe.'}
             </p>
+
+            <a
+              href="mailto:eugen@terradron.ro"
+              className={`inline-block mt-3 text-sm ${accent.muted} hover:text-white transition-colors`}
+            >
+              eugen@terradron.ro
+            </a>
           </div>
 
           {/* Servicii */}

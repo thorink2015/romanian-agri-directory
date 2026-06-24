@@ -19,6 +19,7 @@ import Breadcrumb from '@/components/layout/Breadcrumb';
 import OperatorSchema from '@/components/schema/OperatorSchema';
 import ExternalLink from '@/components/ui/ExternalLink';
 import OperatorContactLinks from '@/components/operators/OperatorContactLinks';
+import OperatorQuoteCTA from '@/components/operators/OperatorQuoteCTA';
 
 interface Props {
   params: { slug: string };
@@ -331,6 +332,20 @@ export default function OperatorPage({ params }: Props) {
 
           {/* ─── Sidebar ─────────────────────────────────────── */}
           <aside className="space-y-4">
+            {/* Request a quote */}
+            <OperatorQuoteCTA
+              slug={operator.slug}
+              name={operator.name}
+              displayName={operator.shortName}
+              responseTimeHours={operator.responseTimeHours}
+              regionName={
+                operator.country === 'MD'
+                  ? coveredRaioane[0]?.name
+                  : coveredCounties[0]?.name
+              }
+              country={operator.country}
+            />
+
             {/* Price */}
             <div className="bg-gradient-to-br from-green-50 to-white border border-green-200 rounded-xl p-5">
               <h3 className="font-bold text-gray-900 mb-3 text-sm uppercase tracking-wide">

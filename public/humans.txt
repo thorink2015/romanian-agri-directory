@@ -1,6 +1,6 @@
 /* TEAM */
 Title: Fondator & Editor
-Contact: contact@terradron.ro
+Contact: eugen@terradron.ro
 Location: Romania
 
 /* SITE */

@@ -26,6 +26,8 @@ import SearchBar from '@/components/search/SearchBar';
 import FAQAccordion from '@/components/ui/FAQAccordion';
 import HomeSchema from '@/components/schema/HomeSchema';
 import NewsletterCTA from '@/components/ui/NewsletterCTA';
+import OperatorMap from '@/components/map/OperatorMap';
+import { getRomaniaMapData } from '@/lib/map-data';
 
 const services = [
   { icon: Droplets, name: 'Pulverizare', desc: 'Stropit culturi: fungicide, erbicide, insecticide', href: '/servicii/spraying' },
@@ -62,6 +64,7 @@ export default function HomePage() {
   const totalHa = operators.reduce((sum, op) => sum + (op.haTreated || 0), 0);
   const topCounties = counties.slice(0, 12);
   const allFaqs = [...pricingFAQs.slice(0, 2), ...generalFAQs];
+  const roMap = getRomaniaMapData();
 
   return (
     <>
@@ -131,6 +134,36 @@ export default function HomePage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Interactive map */}
+      <section className="py-14">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-end justify-between mb-6 gap-4 flex-wrap">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900">Găsește operatori de drone în județul tău</h2>
+              <p className="text-gray-500 mt-1">
+                Apasă pe orice județ pentru a vedea operatorii din zonă. Verde mai închis = mai mulți operatori.
+              </p>
+            </div>
+            <Link
+              href="/harta"
+              className="flex items-center gap-1 text-green-700 font-medium text-sm hover:text-green-800 transition-colors"
+            >
+              Vezi harta completă <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+          <OperatorMap
+            geoUrl="/geo/ro-counties.json"
+            regions={roMap.regions}
+            operatorsByRegion={roMap.operatorsByRegion}
+            accent="green"
+            regionWord="județ"
+            allOperatorsHref="/operatori"
+            country="RO"
+            lazy
+          />
         </div>
       </section>
 

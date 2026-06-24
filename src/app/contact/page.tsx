@@ -24,8 +24,8 @@ export default function ContactPage() {
           <Mail className="w-6 h-6 text-green-600 flex-shrink-0" />
           <div>
             <div className="font-semibold text-gray-900 mb-1">Email general</div>
-            <a href="mailto:contact@terradron.ro" className="text-green-700 hover:underline text-sm">
-              contact@terradron.ro
+            <a href="mailto:eugen@terradron.ro" className="text-green-700 hover:underline text-sm">
+              eugen@terradron.ro
             </a>
           </div>
         </div>

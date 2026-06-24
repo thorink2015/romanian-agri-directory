@@ -2,13 +2,13 @@
 
 import { useState } from 'react';
 import { Check } from 'lucide-react';
+import { trackEvent } from '@/components/analytics/events';
 
 interface Props {
-  variant?: 'default' | 'compact';
   className?: string;
 }
 
-export default function NewsletterForm({ variant = 'default', className = '' }: Props) {
+export default function NewsletterForm({ className = '' }: Props) {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
@@ -33,6 +33,7 @@ export default function NewsletterForm({ variant = 'default', className = '' }: 
       if (res.ok) {
         setStatus('success');
         setEmail('');
+        trackEvent('newsletter_signup');
       } else {
         setStatus('error');
       }
@@ -44,8 +45,8 @@ export default function NewsletterForm({ variant = 'default', className = '' }: 
   if (status === 'success') {
     return (
       <div className={`bg-white/10 border border-white/20 rounded-xl p-4 flex items-center gap-3 ${className}`}>
-        <Check className="w-5 h-5 text-emerald-400 flex-shrink-0" />
-        <span className="text-sm text-gray-200">
+        <Check className="w-5 h-5 text-emerald-300 flex-shrink-0" />
+        <span className="text-sm text-white/90">
           Mulțumim! Verifică emailul pentru confirmare.
         </span>
       </div>
@@ -54,30 +55,26 @@ export default function NewsletterForm({ variant = 'default', className = '' }: 
 
   return (
     <form onSubmit={handleSubmit} className={className}>
-      {variant === 'default' && (
-        <div className="text-xs text-gray-400 mb-2">
-          Primește lunar cele mai bune prețuri și oferte de la operatori
-        </div>
-      )}
-      <div className="flex gap-2">
+      <div className="flex items-center gap-1.5 bg-white rounded-xl p-1.5 shadow-sm">
         <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email-ul tău"
+          placeholder="Adresa ta de email"
           required
-          className="flex-1 min-w-0 bg-white/10 text-white border border-white/20 rounded-lg px-3 py-2 text-sm placeholder:text-gray-500 focus:bg-white/15 focus:border-white/40 focus:outline-none transition-colors"
+          aria-label="Adresa ta de email"
+          className="flex-1 min-w-0 bg-transparent text-gray-900 px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none"
         />
         <button
           type="submit"
           disabled={status === 'loading'}
-          className="bg-white text-slate-900 px-4 py-2 text-sm font-semibold rounded-lg hover:bg-gray-100 transition-colors disabled:opacity-60 whitespace-nowrap"
+          className="bg-gray-900 text-white px-5 py-2.5 text-sm font-semibold rounded-lg hover:bg-black transition-colors disabled:opacity-60 whitespace-nowrap"
         >
-          {status === 'loading' ? '...' : 'Abonează'}
+          {status === 'loading' ? '...' : 'Abonează-te'}
         </button>
       </div>
       {status === 'error' && (
-        <p className="text-xs text-red-400 mt-2">A apărut o eroare. Încearcă din nou.</p>
+        <p className="text-xs text-red-200 mt-2">A apărut o eroare. Încearcă din nou.</p>
       )}
     </form>
   );
