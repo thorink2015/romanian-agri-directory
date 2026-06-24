@@ -5,7 +5,7 @@ import Breadcrumb from '@/components/layout/Breadcrumb';
 import { operators } from '@/data/operators';
 
 export const metadata: Metadata = {
-  title: 'Despre TerraDron.ro | Platforma Operatorilor de Drone Agricole',
+  title: { absolute: 'Despre TerraDron.ro | Platforma Operatorilor de Drone Agricole' },
   description:
     'TerraDron.ro este prima platformă completă de operatori de drone agricole din România. Misiunea noastră: conectăm fermierii cu operatorii de drone agricole verificați.',
   alternates: { canonical: '/despre' },

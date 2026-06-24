@@ -3,7 +3,7 @@ import Breadcrumb from '@/components/layout/Breadcrumb';
 import PriceCalculator from './PriceCalculator';
 
 export const metadata: Metadata = {
-  title: 'Calculator preț pulverizare cu drona 2026 | TerraDron.ro',
+  title: { absolute: 'Calculator preț pulverizare cu drona 2026 | TerraDron.ro' },
   description:
     'Calculează gratuit costul total al pulverizării cu drona agricolă în România. Introdu hectarele, cultura și numărul de tratamente pentru estimare instantanee.',
   alternates: { canonical: '/unelte/calculator-pret-pulverizare' },

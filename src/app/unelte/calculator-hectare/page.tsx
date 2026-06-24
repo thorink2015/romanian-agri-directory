@@ -3,7 +3,7 @@ import Breadcrumb from '@/components/layout/Breadcrumb';
 import HectareCalculator from './HectareCalculator';
 
 export const metadata: Metadata = {
-  title: 'Calculator suprafață hectare | Conversie ha, acri, m² | TerraDron.ro',
+  title: { absolute: 'Calculator suprafață hectare | Conversie ha, acri, m² | TerraDron.ro' },
   description:
     'Calculator online gratuit pentru conversia între hectare, acri, metri pătrați și pogoane. Tool util pentru fermieri români.',
   alternates: { canonical: '/unelte/calculator-hectare' },

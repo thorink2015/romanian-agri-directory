@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import Breadcrumb from '@/components/layout/Breadcrumb';
 
 export const metadata: Metadata = {
-  title: 'Calendar tratamente culturi 2026: Când să stropești? | TerraDron.ro',
+  title: { absolute: 'Calendar tratamente culturi 2026: Când să stropești? | TerraDron.ro' },
   description:
     'Calendar lunar cu tratamentele recomandate pentru grâu, porumb, rapiță, viță de vie, livezi și alte culturi din România.',
   alternates: { canonical: '/unelte/calendar-tratamente' },

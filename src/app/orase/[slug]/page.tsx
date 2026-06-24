@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 import { MapPin } from 'lucide-react';
 import { cities, getCityBySlug } from '@/data/cities';
-import { getOperatorsByCounty } from '@/data/operators';
+import { getOperatorsByCounty, getOperatorsByRaion } from '@/data/operators';
 import { formatPrice } from '@/lib/utils';
 import Breadcrumb from '@/components/layout/Breadcrumb';
 import OperatorCard from '@/components/operators/OperatorCard';
@@ -33,14 +33,20 @@ export default function CityPage({ params }: Props) {
   const city = getCityBySlug(params.slug);
   if (!city) notFound();
 
-  const ops = getOperatorsByCounty(city.county);
+  // Moldova cities use a "-md" county sentinel and live under /moldova/<raion>
+  const isMdCity = city.county.endsWith('-md');
+  const raionSlug = city.county.replace(/-md$/, '');
+  const countyHref = isMdCity ? `/moldova/${raionSlug}` : `/judete/${city.county}`;
+  const ops = isMdCity ? getOperatorsByRaion(raionSlug) : getOperatorsByCounty(city.county);
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <Breadcrumb
         items={[
-          { label: 'Județe', href: '/judete' },
-          { label: city.countyName, href: `/judete/${city.county}` },
+          isMdCity
+            ? { label: 'Moldova', href: '/moldova' }
+            : { label: 'Județe', href: '/judete' },
+          { label: city.countyName, href: countyHref },
           { label: city.name },
         ]}
       />
@@ -105,7 +111,7 @@ export default function CityPage({ params }: Props) {
       {/* Links to county and services */}
       <div className="flex flex-wrap gap-3">
         <Link
-          href={`/judete/${city.county}`}
+          href={countyHref}
           className="px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm hover:border-green-300 hover:text-green-700 transition-colors text-gray-700"
         >
           Toate dronele din {city.countyName}

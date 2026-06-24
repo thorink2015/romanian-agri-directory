@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const guide = getGuideBySlug(params.slug);
   if (!guide || guide.country !== 'MD') return {};
   return {
-    title: `${guide.title} | TerraDron.md Moldova`,
+    title: { absolute: `${guide.title} | TerraDron.md Moldova` },
     description: guide.description,
     alternates: { canonical: `/moldova/ghid/${guide.slug}` },
     openGraph: {

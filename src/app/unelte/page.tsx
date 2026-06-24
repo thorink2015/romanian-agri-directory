@@ -4,7 +4,7 @@ import { Calculator, Ruler, Zap, Calendar, ArrowRight } from 'lucide-react';
 import Breadcrumb from '@/components/layout/Breadcrumb';
 
 export const metadata: Metadata = {
-  title: 'Unelte gratuite pentru fermieri și operatori drone | TerraDron.ro',
+  title: { absolute: 'Unelte gratuite pentru fermieri și operatori drone | TerraDron.ro' },
   description:
     'Calculatoare gratuite pentru fermieri și operatori drone agricole: calculator preț pulverizare, calculator hectare, comparator drone, calendar tratamente.',
   alternates: { canonical: '/unelte' },
