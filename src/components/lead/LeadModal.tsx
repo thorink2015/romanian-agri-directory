@@ -42,12 +42,18 @@ export default function LeadModal() {
   const [country, setCountry] = useState<'RO' | 'MD'>('RO');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const openedRef = useRef(false);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLElement | null>(null);
 
   const pageIsMd = pathname?.startsWith('/moldova') ?? false;
   const close = useCallback(() => setOpen(false), []);
 
   const openModal = useCallback(
     (detail: LeadDetail) => {
+      // Remember the element to restore focus to when the modal closes.
+      if (typeof document !== 'undefined') {
+        triggerRef.current = (document.activeElement as HTMLElement) ?? null;
+      }
       setVariant(detail.variant ?? 'match');
       setOperator(detail.operator ?? null);
       // Country: explicit > current page > RO
@@ -56,7 +62,6 @@ export default function LeadModal() {
       setStatus('idle');
       setOpen(true);
       openedRef.current = true;
-      markSeen();
     },
     [pageIsMd]
   );
@@ -78,6 +83,9 @@ export default function LeadModal() {
 
     function autoOpen() {
       if (openedRef.current || recentlySeen()) return;
+      // Only the automatic popup sets the 7-day cooldown; explicit CTA
+      // clicks should not suppress it.
+      markSeen();
       openModal({ variant: 'match' });
     }
 
@@ -93,18 +101,51 @@ export default function LeadModal() {
     };
   }, [pathname, openModal]);
 
-  // ── Body scroll lock + ESC ───────────────────────────────────────────────
+  // ── Scroll lock + ESC + initial focus + focus trap + restore ─────────────
   useEffect(() => {
     if (!open) return;
-    const prev = document.body.style.overflow;
+    const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+    const trigger = triggerRef.current;
+
+    const focusables = () =>
+      Array.from(
+        dialogRef.current?.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        ) ?? []
+      );
+
+    // Move focus into the dialog (prefer the email field, else first control).
+    const initial =
+      dialogRef.current?.querySelector<HTMLElement>('input[name="email"]') ?? focusables()[0];
+    initial?.focus();
+
     function onKey(e: KeyboardEvent) {
-      if (e.key === 'Escape') close();
+      if (e.key === 'Escape') {
+        close();
+        return;
+      }
+      if (e.key === 'Tab') {
+        const items = focusables();
+        if (items.length === 0) return;
+        const first = items[0];
+        const last = items[items.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     }
     document.addEventListener('keydown', onKey);
+
     return () => {
-      document.body.style.overflow = prev;
+      document.body.style.overflow = prevOverflow;
       document.removeEventListener('keydown', onKey);
+      // Restore focus to whatever opened the modal.
+      if (trigger && typeof trigger.focus === 'function') trigger.focus();
     };
   }, [open, close]);
 
@@ -153,6 +194,7 @@ export default function LeadModal() {
 
   return (
     <div
+      ref={dialogRef}
       className="fixed inset-0 z-[200] flex items-center justify-center p-4"
       role="dialog"
       aria-modal="true"
@@ -170,7 +212,7 @@ export default function LeadModal() {
         </button>
 
         {status === 'success' ? (
-          <div className="px-6 py-12 text-center">
+          <div className="px-6 py-12 text-center" role="status" aria-live="polite">
             <CheckCircle className="w-14 h-14 text-green-600 mx-auto mb-4" />
             <h3 className="text-xl font-bold text-gray-900 mb-2">Cererea a fost trimisă!</h3>
             <p className="text-gray-600 text-sm leading-relaxed">
@@ -238,7 +280,10 @@ export default function LeadModal() {
               />
 
               {status === 'error' && (
-                <p className="text-xs text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+                <p
+                  role="alert"
+                  className="text-xs text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2"
+                >
                   A apărut o eroare. Scrie-ne direct la{' '}
                   <a href="mailto:eugen@terradron.ro" className="underline font-medium">
                     eugen@terradron.ro
