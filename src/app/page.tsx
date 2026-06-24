@@ -26,6 +26,7 @@ import SearchBar from '@/components/search/SearchBar';
 import FAQAccordion from '@/components/ui/FAQAccordion';
 import HomeSchema from '@/components/schema/HomeSchema';
 import NewsletterCTA from '@/components/ui/NewsletterCTA';
+import OperatorSignupCTA from '@/components/ui/OperatorSignupCTA';
 import OperatorMap from '@/components/map/OperatorMap';
 import { getRomaniaMapData } from '@/lib/map-data';
 
@@ -338,21 +339,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA */}
-      <section className="py-14 bg-green-700 text-white">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl font-bold mb-4">Ești operator de drone agricole?</h2>
-          <p className="text-green-100 mb-8 leading-relaxed">
-            Adaugă afacerea ta în cea mai completă platformă de drone agricole din România.
-            Listarea este <strong className="text-white">100% gratuită</strong> și procesată în 48 de ore.
-          </p>
-          <Link
-            href="/adauga-operator"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-white text-green-800 font-bold rounded-xl hover:bg-green-50 transition-colors"
-          >
-            Adaugă-te gratuit <ArrowRight className="w-5 h-5" />
-          </Link>
-        </div>
-      </section>
+      <OperatorSignupCTA country="RO" />
     </>
   );
 }

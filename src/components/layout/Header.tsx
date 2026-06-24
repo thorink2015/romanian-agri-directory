@@ -163,7 +163,7 @@ export default function Header() {
               href="/adauga-operator"
               className={`ml-1.5 px-3.5 py-2 text-sm font-semibold rounded-lg border transition-colors ${isMd ? 'text-blue-700 border-blue-300 hover:bg-blue-50' : 'text-green-700 border-green-300 hover:bg-green-50'}`}
             >
-              Adaugă firma
+              Adaugă operator
             </Link>
           </nav>
 
@@ -248,7 +248,7 @@ export default function Header() {
                 className={`mt-2 mx-3 px-4 py-2.5 text-sm font-semibold rounded-lg text-center border transition-colors ${isMd ? 'text-blue-700 border-blue-300 hover:bg-blue-50' : 'text-green-700 border-green-300 hover:bg-green-50'}`}
                 onClick={() => setOpen(false)}
               >
-                Adaugă firma ta
+                Adaugă operator
               </Link>
             </nav>
           </div>

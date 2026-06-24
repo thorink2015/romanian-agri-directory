@@ -12,10 +12,7 @@ export default function NewsletterForm({ className = '' }: Props) {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
-  const formspreeId =
-    process.env.NEXT_PUBLIC_FORMSPREE_NEWSLETTER_ID ||
-    process.env.NEXT_PUBLIC_FORMSPREE_ID ||
-    '';
+  const formspreeId = process.env.NEXT_PUBLIC_FORMSPREE_ID || '';
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -28,7 +25,11 @@ export default function NewsletterForm({ className = '' }: Props) {
       const res = await fetch(`https://formspree.io/f/${formspreeId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({ email, source: 'newsletter_signup' }),
+        body: JSON.stringify({
+          email,
+          source: 'newsletter_signup',
+          _subject: 'Abonare nouă la newsletter — TerraDron',
+        }),
       });
       if (res.ok) {
         setStatus('success');

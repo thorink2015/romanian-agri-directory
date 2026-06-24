@@ -24,7 +24,11 @@ export default function SubmitForm() {
       const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          ...data,
+          source: 'operator_listing',
+          _subject: 'Cerere de listare operator nou — TerraDron',
+        }),
       });
 
       if (res.ok) {

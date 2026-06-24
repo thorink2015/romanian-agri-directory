@@ -49,8 +49,7 @@ export default function NewsletterCTA({ variant = 'ro' }: Props) {
 
               <p className="mt-4 text-white/80 leading-relaxed max-w-lg">
                 Lectura săptămânală pentru operatorii de drone agricole. Ce s-a schimbat în
-                legislație, tarife, vreme și echipamente.{' '}
-                <span className="text-white font-medium">Peste 700 de operatori îl citesc.</span>
+                legislație, tarife, vreme și echipamente.
               </p>
             </div>
 

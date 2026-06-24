@@ -4,12 +4,12 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { X, Send, CheckCircle, Sparkles } from 'lucide-react';
 import { counties } from '@/data/counties';
+import { moldovaRegions } from '@/data/regions-moldova';
 import { crops } from '@/data/crops';
 import { trackEvent } from '@/components/analytics/events';
 import { LEAD_EVENT, type LeadDetail, type LeadVariant } from '@/lib/lead';
 
-const FORMSPREE_ID =
-  process.env.NEXT_PUBLIC_FORMSPREE_LEAD_ID || process.env.NEXT_PUBLIC_FORMSPREE_ID || '';
+const FORMSPREE_ID = process.env.NEXT_PUBLIC_FORMSPREE_ID || '';
 
 const SEEN_KEY = 'td_lead_seen';
 const SEEN_DAYS = 7;
@@ -39,20 +39,27 @@ export default function LeadModal() {
   const [variant, setVariant] = useState<LeadVariant>('match');
   const [operator, setOperator] = useState<{ slug: string; name: string } | null>(null);
   const [presetCounty, setPresetCounty] = useState<string>('');
+  const [country, setCountry] = useState<'RO' | 'MD'>('RO');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const openedRef = useRef(false);
 
+  const pageIsMd = pathname?.startsWith('/moldova') ?? false;
   const close = useCallback(() => setOpen(false), []);
 
-  const openModal = useCallback((detail: LeadDetail) => {
-    setVariant(detail.variant ?? 'match');
-    setOperator(detail.operator ?? null);
-    setPresetCounty(detail.county ?? (detail.country === 'MD' ? 'Republica Moldova' : ''));
-    setStatus('idle');
-    setOpen(true);
-    openedRef.current = true;
-    markSeen();
-  }, []);
+  const openModal = useCallback(
+    (detail: LeadDetail) => {
+      setVariant(detail.variant ?? 'match');
+      setOperator(detail.operator ?? null);
+      // Country: explicit > current page > RO
+      setCountry(detail.country ?? (pageIsMd ? 'MD' : 'RO'));
+      setPresetCounty(detail.county ?? '');
+      setStatus('idle');
+      setOpen(true);
+      openedRef.current = true;
+      markSeen();
+    },
+    [pageIsMd]
+  );
 
   // ── Explicit triggers (buttons across the site) ──────────────────────────
   useEffect(() => {
@@ -105,11 +112,16 @@ export default function LeadModal() {
     e.preventDefault();
     setStatus('loading');
     const data = Object.fromEntries(new FormData(e.currentTarget));
+    const isQuoteSubmit = variant === 'quote';
     const payload = {
       ...data,
-      source: variant === 'quote' ? 'operator_quote' : 'lead_match',
+      source: isQuoteSubmit ? 'operator_quote' : 'lead_match',
+      country,
       operator_slug: operator?.slug ?? '',
       operator_name: operator?.name ?? '',
+      _subject: isQuoteSubmit
+        ? `Cerere ofertă pentru ${operator?.name ?? 'operator'} — TerraDron`
+        : `Cerere nouă de la fermier (${country}) — TerraDron`,
     };
     try {
       if (!FORMSPREE_ID) throw new Error('no-form-id');
@@ -197,11 +209,10 @@ export default function LeadModal() {
                   defaultValue={presetCounty}
                   className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-green-500"
                 >
-                  <option value="">Județ *</option>
-                  <option value="Republica Moldova">Republica Moldova</option>
-                  {counties.map((c) => (
-                    <option key={c.slug} value={c.name}>
-                      {c.name}
+                  <option value="">{country === 'MD' ? 'Raion *' : 'Județ *'}</option>
+                  {(country === 'MD' ? moldovaRegions : counties).map((r) => (
+                    <option key={r.slug} value={r.name}>
+                      {r.name}
                     </option>
                   ))}
                 </select>

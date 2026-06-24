@@ -8,7 +8,7 @@ import { counties } from '@/data/counties';
 import { getRoOperators } from '@/data/operators';
 
 export const metadata: Metadata = {
-  title: 'Harta Operatorilor de Drone Agricole din România | TerraDron.ro',
+  title: { absolute: 'Harta Operatorilor de Drone Agricole din România | TerraDron.ro' },
   description:
     'Hartă interactivă a operatorilor de drone agricole din România. Apasă pe județul tău și vezi operatorii verificați de pulverizare, fertilizare și monitorizare din zonă.',
   alternates: { canonical: '/harta' },

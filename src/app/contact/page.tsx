@@ -4,7 +4,7 @@ import Breadcrumb from '@/components/layout/Breadcrumb';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Contact | TerraDron.ro',
+  title: { absolute: 'Contact | TerraDron.ro' },
   description: 'Contactează echipa TerraDron.ro pentru întrebări, sugestii sau adăugarea unui nou operator pe platformă.',
   alternates: { canonical: '/contact' },
 };

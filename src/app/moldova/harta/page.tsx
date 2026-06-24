@@ -8,7 +8,7 @@ import { moldovaRegions } from '@/data/regions-moldova';
 import { getMdOperators } from '@/data/operators';
 
 export const metadata: Metadata = {
-  title: 'Harta Operatorilor de Drone Agricole din Moldova | TerraDron',
+  title: { absolute: 'Harta Operatorilor de Drone Agricole din Moldova | TerraDron.ro' },
   description:
     'Hartă interactivă a operatorilor de drone agricole din Republica Moldova. Apasă pe raionul tău și vezi operatorii de pulverizare și fertilizare disponibili.',
   alternates: { canonical: '/moldova/harta' },

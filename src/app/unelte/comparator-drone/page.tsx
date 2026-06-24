@@ -4,7 +4,7 @@ import { droneModels } from '@/data/drone-models';
 import Breadcrumb from '@/components/layout/Breadcrumb';
 
 export const metadata: Metadata = {
-  title: 'Comparator drone agricole DJI, XAG, ADT 2026 | TerraDron.ro',
+  title: { absolute: 'Comparator drone agricole DJI, XAG, ADT 2026 | TerraDron.ro' },
   description:
     'Compară specificațiile dronelor agricole DJI Agras T25P, T50, T100, XAG P100 și ADT Falcon 50P. Preț, capacitate, productivitate.',
   alternates: { canonical: '/unelte/comparator-drone' },

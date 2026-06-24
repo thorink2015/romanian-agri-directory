@@ -5,7 +5,7 @@ import { blogPosts, BLOG_CATEGORY_LABELS } from '@/data/blog-posts';
 import Breadcrumb from '@/components/layout/Breadcrumb';
 
 export const metadata: Metadata = {
-  title: 'Blog Drone Agricole: Topuri, Ghiduri și Noutăți 2026 | TerraDron.ro',
+  title: { absolute: 'Blog Drone Agricole: Topuri, Ghiduri și Noutăți 2026 | TerraDron.ro' },
   description:
     'Articole despre drone agricole: topuri operatori, ghiduri de tratamente, legislație AACR și studii de caz AFIR.',
   alternates: { canonical: '/blog' },

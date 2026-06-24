@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = getBlogPostBySlug(params.slug);
   if (!post) return {};
   return {
-    title: `${post.title} | TerraDron.ro Blog`,
+    title: { absolute: `${post.title} | TerraDron.ro Blog` },
     description: post.description,
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {

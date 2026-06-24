@@ -186,7 +186,7 @@ export default function CountyCropPage({ params }: Props) {
         <h2 className="text-base font-semibold text-gray-900 mb-3">Alte culturi în {county.name}</h2>
         <div className="flex flex-wrap gap-2">
           {county.mainCrops
-            .filter((c) => c !== crop.slug)
+            .filter((c) => c !== crop.slug && CROP_NAME_MAP[c])
             .map((c) => (
               <Link
                 key={c}
