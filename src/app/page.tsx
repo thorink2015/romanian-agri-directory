@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/' },
   openGraph: {
     title: 'TerraDron.ro: Operatori de Drone Agricole în România',
-    description: '23 operatori verificați în toate cele 41 de județe. Prețuri actualizate și contact direct.',
+    description: '20 operatori verificați în toate cele 41 de județe. Prețuri actualizate și contact direct.',
     url: 'https://terradron.ro',
   },
 };

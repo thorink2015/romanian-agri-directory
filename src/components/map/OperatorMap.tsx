@@ -181,6 +181,8 @@ export default function OperatorMap({
                     className="cursor-pointer transition-[stroke,opacity] duration-150"
                     style={{ opacity: hovered && hovered !== r.slug ? 0.85 : 1 }}
                     onMouseEnter={() => setHovered(r.slug)}
+                    onFocus={() => setHovered(r.slug)}
+                    onBlur={() => setHovered(null)}
                     onClick={() => setSelected(r.slug)}
                     tabIndex={0}
                     role="button"
