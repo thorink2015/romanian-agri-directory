@@ -241,7 +241,17 @@ export default function LeadModal() {
                 name="email"
                 type="email"
                 required
+                autoComplete="email"
                 placeholder="Adresa ta de email *"
+                className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+              />
+              <input
+                name="phone"
+                type="tel"
+                required
+                inputMode="tel"
+                autoComplete="tel"
+                placeholder="Numărul tău de telefon *"
                 className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
               />
               <div className="grid grid-cols-2 gap-3">
