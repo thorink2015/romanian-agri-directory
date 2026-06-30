@@ -3,6 +3,7 @@ import Link from 'next/link';
 import {
   Globe, MapPin, CheckCircle, Calendar, Plane,
   Clock, Languages, CreditCard, Shield, Award, Zap, Users, ClipboardList,
+  GraduationCap, ArrowUpRight,
 } from 'lucide-react';
 import {
   FacebookIcon, InstagramIcon, LinkedinIcon, YoutubeIcon, TiktokIcon,
@@ -20,6 +21,7 @@ import OperatorSchema from '@/components/schema/OperatorSchema';
 import ExternalLink from '@/components/ui/ExternalLink';
 import OperatorContactLinks from '@/components/operators/OperatorContactLinks';
 import OperatorQuoteCTA from '@/components/operators/OperatorQuoteCTA';
+import OperatorCourses from '@/components/operators/OperatorCourses';
 
 interface Props {
   params: { slug: string };
@@ -168,6 +170,20 @@ export default function OperatorPage({ params }: Props) {
               </div>
             </section>
 
+            {/* Courses (training academies) */}
+            {operator.courses && operator.courses.length > 0 && (
+              <section className="bg-white border border-gray-200 rounded-xl p-6">
+                <h2 className="font-bold text-gray-900 text-lg flex items-center gap-2">
+                  <GraduationCap className="w-5 h-5 text-green-600" />
+                  Cursuri oferite
+                </h2>
+                <p className="text-sm text-gray-500 mt-1 mb-4">
+                  Apasă pe un curs pentru detalii, durată și cerințe de participare.
+                </p>
+                <OperatorCourses courses={operator.courses} />
+              </section>
+            )}
+
             {/* Crops */}
             {operator.crops.length > 0 && (
               <section className="bg-white border border-gray-200 rounded-xl p-6">
@@ -187,7 +203,7 @@ export default function OperatorPage({ params }: Props) {
             )}
 
             {/* Drones */}
-            {operator.drones.length > 0 && (
+            {(operator.drones.length > 0 || (operator.dronesCustom?.length ?? 0) > 0) && (
               <section className="bg-white border border-gray-200 rounded-xl p-6">
                 <h2 className="font-bold text-gray-900 mb-4 text-lg">Drone utilizate</h2>
                 <div className="flex flex-wrap gap-2">
@@ -200,6 +216,15 @@ export default function OperatorPage({ params }: Props) {
                       <Plane className="w-3.5 h-3.5 rotate-45" />
                       {DRONE_NAME_MAP[d] || d}
                     </Link>
+                  ))}
+                  {operator.dronesCustom?.map((d) => (
+                    <span
+                      key={d}
+                      className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-800 border border-blue-200 rounded-lg text-sm font-medium"
+                    >
+                      <Plane className="w-3.5 h-3.5 rotate-45" />
+                      {d}
+                    </span>
                   ))}
                 </div>
               </section>
@@ -262,6 +287,17 @@ export default function OperatorPage({ params }: Props) {
                     </div>
                   )}
                 </div>
+              </section>
+            )}
+
+            {/* Coverage — free-text note (e.g. national / European reach) */}
+            {operator.coverageNote && coveredCounties.length === 0 && (
+              <section className="bg-white border border-gray-200 rounded-xl p-6">
+                <h2 className="font-bold text-gray-900 mb-3 text-lg flex items-center gap-2">
+                  <MapPin className="w-5 h-5 text-green-600" />
+                  Zone de acoperire
+                </h2>
+                <p className="text-sm text-gray-700 leading-relaxed">{operator.coverageNote}</p>
               </section>
             )}
 
@@ -349,22 +385,41 @@ export default function OperatorPage({ params }: Props) {
             {/* Price */}
             <div className="bg-gradient-to-br from-green-50 to-white border border-green-200 rounded-xl p-5">
               <h3 className="font-bold text-gray-900 mb-3 text-sm uppercase tracking-wide">
-                Prețuri orientative
+                Prețuri{operator.priceNote ? '' : ' orientative'}
               </h3>
-              <div className="text-3xl font-bold text-green-700 mb-1">
-                {formatPrice(operator.priceMinRon, operator.priceMaxRon)}
-              </div>
-              {operator.priceMinMdl && (
-                <div className="text-xl font-semibold text-green-600">
-                  {formatPrice(operator.priceMinMdl, operator.priceMaxMdl, 'MDL')}
-                </div>
+              {operator.priceNote ? (
+                <>
+                  <p className="text-sm text-gray-700 leading-relaxed">{operator.priceNote}</p>
+                  {operator.priceUrl && (
+                    <ExternalLink
+                      href={operator.priceUrl}
+                      operatorSlug={operator.slug}
+                      source="operator_pricing"
+                      className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-green-700 hover:text-green-800 transition-colors"
+                    >
+                      Vezi prețurile pe site
+                      <ArrowUpRight className="w-4 h-4" />
+                    </ExternalLink>
+                  )}
+                </>
+              ) : (
+                <>
+                  <div className="text-3xl font-bold text-green-700 mb-1">
+                    {formatPrice(operator.priceMinRon, operator.priceMaxRon)}
+                  </div>
+                  {operator.priceMinMdl && (
+                    <div className="text-xl font-semibold text-green-600">
+                      {formatPrice(operator.priceMinMdl, operator.priceMaxMdl, 'MDL')}
+                    </div>
+                  )}
+                  {!operator.priceMinRon && !operator.priceMinMdl && (
+                    <p className="text-sm text-gray-500">Contactați pentru ofertă</p>
+                  )}
+                  <p className="text-xs text-gray-500 mt-2">
+                    * Variază în funcție de cultură și suprafață
+                  </p>
+                </>
               )}
-              {!operator.priceMinRon && !operator.priceMinMdl && (
-                <p className="text-sm text-gray-500">Contactați pentru ofertă</p>
-              )}
-              <p className="text-xs text-gray-500 mt-2">
-                * Variază în funcție de cultură și suprafață
-              </p>
             </div>
 
             {/* Response time + service details */}

@@ -35,7 +35,14 @@ export default function OperatorSchema({ operator }: Props) {
       '@type': 'AdministrativeArea',
       name: c,
     })),
-    sameAs: [operator.website, operator.facebook].filter(Boolean),
+    sameAs: [
+      operator.website,
+      operator.facebook,
+      operator.instagram,
+      operator.linkedin,
+      operator.tiktok,
+      operator.youtube,
+    ].filter(Boolean),
     priceRange: operator.priceMinRon
       ? `${operator.priceMinRon}–${operator.priceMaxRon || operator.priceMinRon} RON/ha`
       : undefined,
