@@ -23,6 +23,15 @@ export const SERVICE_LABELS: Record<ServiceType, string> = {
   emergency: 'Intervenție rapidă',
 };
 
+/** A training course offered by an operator (e.g. a drone-pilot academy). */
+export interface OperatorCourse {
+  title: string;
+  description: string;
+  duration?: string;              // e.g. "4 zile (2 zile teorie + 2 zile practică)"
+  requiresPrerequisite?: boolean; // true = needs a prior/base course to enrol
+  highlight?: boolean;            // emphasise (e.g. the agriculture specialisation)
+}
+
 export interface Operator {
   slug: string;
   name: string;             // Full legal name (used on profile page)
@@ -32,6 +41,7 @@ export interface Operator {
   country: 'RO' | 'MD';
   counties: string[];
   moldovaRaioane?: string[]; // Moldova: raion slugs covered
+  coverageNote?: string;     // Free-text coverage shown instead of county chips (e.g. national reach)
   city: string;
   address?: string;
   phone?: string;
@@ -45,9 +55,13 @@ export interface Operator {
   founded?: number;
   services: ServiceType[];
   drones: string[];
+  dronesCustom?: string[];   // Free-text drone names not in the agri-drone catalog (non-linked badges)
+  courses?: OperatorCourse[]; // Training courses (rendered as an expandable accordion)
   crops: string[];
   priceMinRon?: number;
   priceMaxRon?: number;
+  priceNote?: string;        // Off-site pricing: short note shown in the price box
+  priceUrl?: string;         // Off-site pricing: link to the operator's pricing page
   priceMinMdl?: number;
   priceMaxMdl?: number;
   haTreated?: number;

@@ -361,19 +361,65 @@ export const operators: Operator[] = [
   },
   {
     slug: 'la-inaltime-academy',
-    name: 'La Înălțime Academy',
+    name: 'La Înălțime Drone Academy',
     shortName: 'La Înălțime',
-    tagline: 'Singura școală cu poligon în aer liber',
+    tagline: 'Prima academie completă de piloți de drone din România',
     description:
-      'Singura școală de piloți de drone din București cu poligon de antrenament în aer liber. Cursuri de inițiere (€500/3 zile), certificare completă (€1.900/2 săptămâni, 40 ore) și modul specializat în agricultură de precizie (€500/2 zile).',
+      'La Înălțime Drone Academy este prima academie din România care dezvoltă un ecosistem complet pentru formarea piloților de drone — de la cursuri de bază și specializare până la oportunități reale în industrie și consultanță pentru dezvoltarea unui business în acest domeniu.',
     country: 'RO',
-    counties: ['bucuresti', 'ilfov'],
+    counties: [],
+    coverageNote:
+      'Ne adresăm cursanților la nivel național și european. Modulul de practică se desfășoară pe aerodrom, lângă București. Oferim și pachete de instruire personalizate pentru echipa ta — disponibile prin solicitare de ofertă, pentru grupe de minimum 5 persoane.',
     city: 'București',
-    website: 'https://la-inaltime.ro',
-    facebook: 'https://www.facebook.com/lainaltime.academy',
+    website: 'https://www.lainaltime-academy.ro/',
+    facebook: 'https://www.facebook.com/p/La-%C3%8En%C4%83l%C8%9Bime-Drone-Academy-61581094920136/',
+    instagram: 'https://www.instagram.com/academy_la_inaltime_drone/',
+    tiktok: 'https://www.tiktok.com/@la_inaltime_drone',
+    youtube: 'https://www.youtube.com/channel/UCY3JFqRvBSxXa10aq1iE04g',
     services: ['training'],
-    drones: ['dji-agras-t50', 'dji-agras-t25p'],
+    drones: [],
+    dronesCustom: ['DJI NEO', 'DJI M350 RTK', 'DJI M30T', 'DJI Avata 2', 'Drone agricole'],
+    courses: [
+      {
+        title: 'Curs de bază — pilot de drone',
+        description:
+          'Curs introductiv, destinat persoanelor fără experiență sau cu experiență limitată, care vor să învețe pilotajul corect, sigur și conform legislației europene. Este baza necesară pentru orice specializare ulterioară.',
+        duration: '4 zile (2 zile teorie și pregătire + 2 zile practică)',
+        requiresPrerequisite: false,
+      },
+      {
+        title: 'Specializare — mentenanță clădiri, curățare și spălare fațade',
+        description:
+          'Pregătește piloții să efectueze lucrări de mentenanță pe fațade, folosind drone echipate cu sisteme de spălare cu presiune și aplicare de spumă. Accent pe siguranță, tehnici de apropiere de suprafețe, control în condiții urbane, aplicare uniformă a soluțiilor și evaluarea rezultatului.',
+        duration: '1 zi de practică',
+        requiresPrerequisite: true,
+      },
+      {
+        title: 'Specializare — inspecții clădiri, parcuri fotovoltaice, infrastructuri',
+        description:
+          'Pregătește piloții să efectueze inspecții tehnice (uzuale, cameră termică, RGB cu zoom, telemetrie laser range finder, 3D) pentru clădiri, parcuri fotovoltaice și infrastructuri. Accent pe siguranță, colectarea datelor, analiză și raportare.',
+        duration: '2 zile (1 zi teorie + 1 zi practică)',
+        requiresPrerequisite: true,
+      },
+      {
+        title: 'Specializare — filmări aeriene',
+        description:
+          'Destinat piloților videografi, fotografi și creatori de conținut care vor să realizeze cadre aeriene cinematice și stabile, utilizând tehnici profesionale, conform cadrului legal.',
+        duration: '2 zile (1 zi teorie + 1 zi practică)',
+        requiresPrerequisite: true,
+      },
+      {
+        title: 'Specializare — pilot de dronă pentru agricultură',
+        description:
+          'Dedicat piloților care vor să desfășoare activități de agricultură de precizie: împrăștiere de îngrășăminte, irigații, însămânțare, monitorizarea culturilor, detectarea problemelor, evaluarea calității solului, hărți, analize multispectrale și aplicări localizate. Ideal pentru ferme, agronomi și cooperative.',
+        duration: '2 zile (1 zi teorie + 1 zi practică)',
+        requiresPrerequisite: true,
+        highlight: true,
+      },
+    ],
     crops: [],
+    priceNote: 'Prețurile sunt detaliate per curs pe site-ul nostru oficial.',
+    priceUrl: 'https://www.lainaltime-academy.ro/',
     languagesSpoken: ['ro', 'en'],
     paymentMethods: ['transfer', 'card'],
     verified: true,

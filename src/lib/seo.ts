@@ -13,7 +13,9 @@ export function buildOperatorMetadata(operator: Operator): Metadata {
     : '';
   const coverage = operator.country === 'MD'
     ? `Acoperire în ${operator.moldovaRaioane?.length || 'toate'} raioane din Moldova.`
-    : `Acoperire în ${operator.counties.length} județe din România.`;
+    : operator.counties.length > 0
+    ? `Acoperire în ${operator.counties.length} județe din România.`
+    : 'Acoperire la nivel național.';
   return {
     title: `${operator.name} | Servicii Drone Agricole ${operator.city} | Prețuri și Contact`,
     description: `${operator.name}, operator de drone agricole din ${operator.city}. ${price}${operator.services.length} servicii disponibile. ${coverage} Contact direct.`,
