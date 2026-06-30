@@ -368,59 +368,71 @@ export default function OperatorPage({ params }: Props) {
 
           {/* ─── Sidebar ─────────────────────────────────────── */}
           <aside className="space-y-4">
-            {/* Request a quote */}
-            <OperatorQuoteCTA
-              slug={operator.slug}
-              name={operator.name}
-              displayName={operator.shortName}
-              responseTimeHours={operator.responseTimeHours}
-              regionName={
-                operator.country === 'MD'
-                  ? coveredRaioane[0]?.name
-                  : coveredCounties[0]?.name
-              }
-              country={operator.country}
-            />
-
-            {/* Price */}
-            <div className="bg-gradient-to-br from-green-50 to-white border border-green-200 rounded-xl p-5">
-              <h3 className="font-bold text-gray-900 mb-3 text-sm uppercase tracking-wide">
-                Prețuri{operator.priceNote ? '' : ' orientative'}
-              </h3>
-              {operator.priceNote ? (
-                <>
-                  <p className="text-sm text-gray-700 leading-relaxed">{operator.priceNote}</p>
-                  {operator.priceUrl && (
-                    <ExternalLink
-                      href={operator.priceUrl}
-                      operatorSlug={operator.slug}
-                      source="operator_pricing"
-                      className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-green-700 hover:text-green-800 transition-colors"
-                    >
-                      Vezi prețurile pe site
-                      <ArrowUpRight className="w-4 h-4" />
-                    </ExternalLink>
-                  )}
-                </>
-              ) : (
-                <>
-                  <div className="text-3xl font-bold text-green-700 mb-1">
-                    {formatPrice(operator.priceMinRon, operator.priceMaxRon)}
-                  </div>
-                  {operator.priceMinMdl && (
-                    <div className="text-xl font-semibold text-green-600">
-                      {formatPrice(operator.priceMinMdl, operator.priceMaxMdl, 'MDL')}
-                    </div>
-                  )}
-                  {!operator.priceMinRon && !operator.priceMinMdl && (
-                    <p className="text-sm text-gray-500">Contactați pentru ofertă</p>
-                  )}
-                  <p className="text-xs text-gray-500 mt-2">
-                    * Variază în funcție de cultură și suprafață
+            {operator.priceUrl ? (
+              /* Off-site pricing (e.g. training academies): a prominent pricing
+                 CTA replaces the agricultural "request a quote" form, which is
+                 not relevant here. Button click is tracked via ExternalLink. */
+              <div className="bg-green-700 text-white rounded-xl p-5 shadow-sm">
+                <h3 className="font-bold text-lg leading-snug">Prețuri</h3>
+                {operator.priceNote && (
+                  <p className="text-sm text-green-50 mt-1.5 leading-relaxed">
+                    {operator.priceNote}
                   </p>
-                </>
-              )}
-            </div>
+                )}
+                <ExternalLink
+                  href={operator.priceUrl}
+                  operatorSlug={operator.slug}
+                  source="operator_pricing_cta"
+                  className="mt-4 w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-white text-green-800 font-bold text-sm rounded-lg hover:bg-green-50 transition-colors"
+                >
+                  Află prețuri
+                  <ArrowUpRight className="w-4 h-4" />
+                </ExternalLink>
+              </div>
+            ) : (
+              <>
+                {/* Request a quote */}
+                <OperatorQuoteCTA
+                  slug={operator.slug}
+                  name={operator.name}
+                  displayName={operator.shortName}
+                  responseTimeHours={operator.responseTimeHours}
+                  regionName={
+                    operator.country === 'MD'
+                      ? coveredRaioane[0]?.name
+                      : coveredCounties[0]?.name
+                  }
+                  country={operator.country}
+                />
+
+                {/* Price */}
+                <div className="bg-gradient-to-br from-green-50 to-white border border-green-200 rounded-xl p-5">
+                  <h3 className="font-bold text-gray-900 mb-3 text-sm uppercase tracking-wide">
+                    Prețuri{operator.priceNote ? '' : ' orientative'}
+                  </h3>
+                  {operator.priceNote ? (
+                    <p className="text-sm text-gray-700 leading-relaxed">{operator.priceNote}</p>
+                  ) : (
+                    <>
+                      <div className="text-3xl font-bold text-green-700 mb-1">
+                        {formatPrice(operator.priceMinRon, operator.priceMaxRon)}
+                      </div>
+                      {operator.priceMinMdl && (
+                        <div className="text-xl font-semibold text-green-600">
+                          {formatPrice(operator.priceMinMdl, operator.priceMaxMdl, 'MDL')}
+                        </div>
+                      )}
+                      {!operator.priceMinRon && !operator.priceMinMdl && (
+                        <p className="text-sm text-gray-500">Contactați pentru ofertă</p>
+                      )}
+                      <p className="text-xs text-gray-500 mt-2">
+                        * Variază în funcție de cultură și suprafață
+                      </p>
+                    </>
+                  )}
+                </div>
+              </>
+            )}
 
             {/* Response time + service details */}
             {(operator.responseTimeHours || operator.languagesSpoken?.length || operator.paymentMethods?.length) && (
